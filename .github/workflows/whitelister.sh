@@ -11,12 +11,6 @@ for TARGET in $(cat $WORDLIST); do
     echo "$TARGET" | grep -oE "\w*\.gov" | sort -u >> cleanedgov.txt
 done
 
-echo "Adding quotes to list.."
-for DOMAIN in $(cat cleanedgov.txt); do
-    echo "\"$DOMAIN\"" >> cleanedgov.txt
-sed '/^".*"$/!d' cleanedgov.txt > cleanedgov.txt
-done
-
 
 echo "Processing Data..."
 WORDLIST=cleanedgov.txt
