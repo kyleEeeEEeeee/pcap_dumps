@@ -14,6 +14,7 @@ done
 echo "Adding quotes to list.."
 for DOMAIN in $(cat cleanedgov.txt); do
     echo "\"$DOMAIN\"" >> cleanedgov.txt
+sed '/^".*"$/!d' cleanedgov.txt > cleanedgov.txt
 done
 
 
@@ -22,7 +23,7 @@ WORDLIST=cleanedgov.txt
 
 for TARGET in $(cat $WORDLIST); do
 
-    curl -s "https://crt.sh/?q=${TARGET}&output=json" | jq -r '.[] | "\(.name_value)\n\"' | sort -u >> processed_gov.txt
+    curl -s "https://crt.sh/?q=${TARGET}&output=json" | jq -r '.[] | "\(.name_value)"' | grep -v *. | sort -u >> processed_gov.txt
 done
 
 echo "Running NSLOOKUP..."
